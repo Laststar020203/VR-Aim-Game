@@ -29,6 +29,8 @@ public class CubeAction : MonoBehaviour {
             (tr.position.z >= -LimitZ && tr.position.z <= LimitZ) &&
                 (tr.position.y <= LimitY && tr.position.y >= 0)))
         {
+
+
             DistanceChange();
         }
 
@@ -47,7 +49,7 @@ public class CubeAction : MonoBehaviour {
 
     private void SetIrregularRotate()
     {
-        Vector3 newVector = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
+        Vector3 newVector = new Vector3(Random.Range(-350, 350), Random.Range(-350, 350), Random.Range(-350, 350));
 
         this.location = newVector;
     }
@@ -67,6 +69,11 @@ public class CubeAction : MonoBehaviour {
     {
         Debug.Log("DistanceChange");
 
+        tr.position = new Vector3(
+                ((Mathf.Sign(tr.position.x) == 1) ? tr.position.x - 0.1f : tr.position.x + 0.1f),
+                ((Mathf.Sign(tr.position.y) == 1) ? tr.position.y - 0.1f : tr.position.y + 0.1f),
+                ((Mathf.Sign(tr.position.z) == 1) ? tr.position.z - 0.1f : tr.position.z + 0.1f)
+                );
 
         SetIrregularRotate();
         this.distance = -distance;
