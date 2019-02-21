@@ -61,7 +61,7 @@ public class GvrPointerPhysicsRaycaster : GvrBasePointerRaycaster
     private int maxRaycastHits = 64;
 
     /// Buffer of raycast hits re-used each time PerformRaycast is called.
-    private RaycastHit[] hits;
+    public RaycastHit[] hits;
 
     /// Used to sort the hits by distance.
     private HitComparer hitComparer = new HitComparer();

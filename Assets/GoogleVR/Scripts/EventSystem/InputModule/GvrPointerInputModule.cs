@@ -263,6 +263,7 @@ public class GvrPointerInputModule : BaseInputModule, IGvrInputModuleController
 
     public new RaycastResult FindFirstRaycast(List<RaycastResult> candidates)
     {
+
         return BaseInputModule.FindFirstRaycast(candidates);
     }
 

@@ -14,6 +14,8 @@ public class CubeAction : MonoBehaviour {
     public int LimitY;
     public int LimitZ;
 
+
+
     public int score = 0;
 
     void Start()
@@ -25,6 +27,8 @@ public class CubeAction : MonoBehaviour {
     void Update()
     {
 
+        
+
         if (!((tr.position.x >= -LimitX && tr.position.x <= LimitX) &&
             (tr.position.z >= -LimitZ && tr.position.z <= LimitZ) &&
                 (tr.position.y <= LimitY && tr.position.y >= 0)))
@@ -33,6 +37,8 @@ public class CubeAction : MonoBehaviour {
 
             DistanceChange();
         }
+
+       
 
         Move();
         Rotate();
@@ -67,7 +73,6 @@ public class CubeAction : MonoBehaviour {
 
     private void DistanceChange()
     {
-        Debug.Log("DistanceChange");
 
         tr.position = new Vector3(
                 ((Mathf.Sign(tr.position.x) == 1) ? tr.position.x - 0.1f : tr.position.x + 0.1f),
@@ -84,6 +89,21 @@ public class CubeAction : MonoBehaviour {
         score++;
         SetIrregularDistance();
 
-        Debug.Log("Click!");
     }
+
+    private void OnCollisionEnter(Collision coll)
+    {
+        if (coll.collider.CompareTag("MainCamera"))
+        {
+            Debug.Log(coll.gameObject.name);
+           
+        }
+    }
+
+    private void HitbyPlayerAction(CollectObjectHitEvent e)
+    {
+        if()
+    }
+
+    
 }
