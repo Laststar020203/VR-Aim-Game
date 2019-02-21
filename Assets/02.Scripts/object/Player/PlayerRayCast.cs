@@ -29,7 +29,7 @@ public class PlayerRayCast : MonoBehaviour
     {
         if (hits[0].collider.CompareTag("TARGET"))
         {
-            EventHandler.CallEvent(new CollectObjectHitEvent(hits[0].point));
+            EventManager.CallEvent(new CollectObjectHitEvent(hits[0].point));
         }
     }
 }

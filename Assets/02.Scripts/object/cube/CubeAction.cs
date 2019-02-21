@@ -102,7 +102,7 @@ public class CubeAction : MonoBehaviour {
 
     private void HitbyPlayerAction(CollectObjectHitEvent e)
     {
-        if()
+       
     }
 
     

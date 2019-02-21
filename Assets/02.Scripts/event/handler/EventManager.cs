@@ -5,12 +5,12 @@ using System.Reflection;
 
 public delegate void GameEvent<T>(T t) where T : Event;
 
-public class EventHandler : MonoBehaviour
+public class EventManager : MonoBehaviour
 {
     public static void AddEvent<T>(GameEvent<T> dele)
           where T : Event
     {
-        object listeners = typeof(T).GetProperty("Listeners").GetValue(null , null);
+        object listeners = typeof(T).GetProperty("Listeners").GetValue(null, null);
 
         listeners = dele;
     }
