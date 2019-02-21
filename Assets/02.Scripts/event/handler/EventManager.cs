@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Reflection;
 
 public delegate void GameEvent<T>(T t) where T : Event;
 
-public class EventManager : MonoBehaviour
+public class EventManager 
 {
-    public static void AddEvent<T>(GameEvent<T> dele)
+    public static void AddListener<T>(GameEvent<T> dele)
           where T : Event
     {
-        object listeners = typeof(T).GetProperty("Listeners").GetValue(null, null);
+        FieldInfo field = typeof(T).GetField("listeners");
 
-        listeners = dele;
+        
+        List<GameEvent<T>> list = (List<GameEvent<T>>)field.GetValue(null);
+
+        list.Add(dele);
     }
 
 
@@ -30,3 +31,4 @@ public class EventManager : MonoBehaviour
         }
     }
 }
+
