@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerRayCast : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class PlayerRayCast : MonoBehaviour
     private int count = 0;
 
     Transform tr;
-    RaycastHit hit;
+
 
     private void Awake()
     {
@@ -26,33 +27,30 @@ public class PlayerRayCast : MonoBehaviour
     }
 
 
-        // Update is called once per frame
-     void Update()
-     {
-            this.hits = gpph.hits;
+    // Update is called once per frame
+    void Update()
+    {
+        this.hits = gpph.hits;
 
-            if (Physics.Raycast(tr.position, tr.forward, out hit, Mathf.Infinity))
+        if (hits[0].collider.CompareTag("TARGET"))
+        {
+            if (Time.time >= nextTime)
             {
-            Debug.DrawRay(tr.position, tr.forward, Color.blue, Mathf.Infinity);
-            if (hit.collider.CompareTag("TARGET"))
-            {
-                if (Time.time >= nextTime)
-                {
-                    Debug.Log(Time.time);
-                    CheckHitObject();
-                    nextTime = Time.time + coolTime;
-                }
-            }
-            }
+                Debug.Log(Time.time);
+                CheckHitObject();
+                nextTime = Time.time + coolTime;
 
+            }
         }
 
-    
+    }
+
+
 
     private void CheckHitObject()
     {
-       
-            EventManager.CallEvent(new CollectObjectHitEvent(hits[0].point));
-        
+
+        EventManager.CallEvent(new CollectObjectHitEvent(hits[0].point));
+
     }
 }
