@@ -8,16 +8,10 @@ public class GameManager : MonoBehaviour
 
 
 
-    public List<DoTweenExample> lists;
-    private float addCount = 0;
 
     private void Awake()
     {
-        foreach (DoTweenExample list in lists)
-        {
-            list.number = addCount;
-            addCount += 1f;
-        }
+       
 
     }
 

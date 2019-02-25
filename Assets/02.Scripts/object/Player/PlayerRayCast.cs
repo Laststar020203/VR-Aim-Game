@@ -32,6 +32,7 @@ public class PlayerRayCast : MonoBehaviour
     {
         this.hits = gpph.hits;
 
+        /*
         if (hits[0].collider.CompareTag("TARGET"))
         {
             if (Time.time >= nextTime)
@@ -42,6 +43,7 @@ public class PlayerRayCast : MonoBehaviour
 
             }
         }
+        */
 
     }
 

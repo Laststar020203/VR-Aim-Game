@@ -6,8 +6,8 @@ using DG.Tweening;
 
 public abstract class Solider : MonoBehaviour
 {
-    public abstract void Play(int delay, int duration , int power);
-    public bool isCompeleted = false;
+    public abstract void Play(float delay, float duration , float power);
+    public bool isCompeleted = true;
     
 
 }
