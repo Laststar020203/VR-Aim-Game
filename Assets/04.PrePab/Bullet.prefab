@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2922037719346604379}
   - component: {fileID: 2922037719346604376}
   - component: {fileID: 2396928773831944076}
-  m_Layer: 0
+  - component: {fileID: 1310973977}
+  m_Layer: 2
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: BULLET
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2922037719346604380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.8284354, y: 30.58277, z: -76.15197}
-  m_LocalScale: {x: 0.059604794, y: 0.088316426, z: 0.23735222}
+  m_LocalScale: {x: 0.46724996, y: 0.69232434, z: 1.860636}
   m_Children:
   - {fileID: 4630906280937550811}
   m_Father: {fileID: 0}
@@ -45,8 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eae1a8fb51eea54b9c12cdd6b530f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200000
-  location: {x: 0, y: 0, z: 0}
+  speed: 20
 --- !u!54 &2396928773831944076
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -55,14 +55,28 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2922037719346604380}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.01
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
+  m_Constraints: 114
+  m_CollisionDetection: 2
+--- !u!136 &1310973977
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922037719346604380}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5000002
+  m_Height: 2.0000005
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: -0.0000076293945}
 --- !u!1 &9114750128176134043
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,8 +88,7 @@ GameObject:
   - component: {fileID: 4630906280937550811}
   - component: {fileID: 1828259437551561306}
   - component: {fileID: 9144454489548644932}
-  - component: {fileID: 952108028001158125}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,17 +154,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &952108028001158125
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9114750128176134043}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000002
-  m_Height: 2.0000005
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: -0.0000076293945}

@@ -3,38 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
-public class Frime : Solider
+public class Frime : Solider , IGvrPointerHoverHandler
 {
 
     [HideInInspector]
     public bool isDie = false;
 
     Transform tr;
-    Vector3 firstPosition;
+    public Vector3 firstPosition;
 
-    private readonly int count;
+    public float hp;
+    
 
     Animator anim;
 
+    private int count
+    {
+        get
+        {
+            return Convert.ToInt32(this.gameObject.name.Substring(this.gameObject.name.IndexOf("_") + 1));
+        }
+    }
     public GameObject bullet;
 
     private Transform playerTr;
+
+    private bool firstMoving = true;
 
     private void Awake()
     {
         tr = GetComponent<Transform>();
         anim = GetComponent<Animator>();
         firstPosition = tr.position;
-        isCompeleted = true;
 
         playerTr = GameObject.FindGameObjectWithTag("PLAYER").GetComponent<Transform>();
+
+        coolTime = 0.1f;
+        myScore = 20;
     }
 
     private void Start()
     {
+
+        isCompeleted = false;
+        StartCoroutine(Idle(0.1f, 0.5f));
         //count = Convert.ToInt32(this.gameObject.name.Substring(this.gameObject.name.IndexOf("_") + 1));
-        
+
     }
 
     private void Update()
@@ -46,10 +62,10 @@ public class Frime : Solider
        tr.LookAt(playerTr);
     
        if(Time.time > nextTime)
-        {
+       {
             BeamAttack();
             nextTime = Time.time + coolTime;
-        }
+       }
 
 
     }
@@ -61,13 +77,14 @@ public class Frime : Solider
         tr.DOMove(firstPosition, duration).OnComplete(delegate
         {
             isCompeleted = true;
+            firstMoving = false;
         });
     }
    
     private IEnumerator Triangle(float delay, float duration , float power)
     {
         
-        yield return new WaitForSeconds(delay * Convert.ToInt32(this.gameObject.name.Substring(this.gameObject.name.IndexOf("_") + 1)));
+        yield return new WaitForSeconds(delay * count);
 
 
         Sequence triangle = DOTween.Sequence();
@@ -107,9 +124,34 @@ public class Frime : Solider
 
     private void BeamAttack()
     {
+        if (firstMoving) return;
+        /*
         GameObject _bullet = Instantiate(bullet, tr.position, Quaternion.identity);
         FrimeBullet fb = _bullet.GetComponent<FrimeBullet>();
         fb.location =  playerTr.position - tr.position + new Vector3(0, 4 ,0 );
         Destroy(_bullet, 3.0f);
+        */
+        var _bullet = FrimeController.head.GetBullet(count - 1);
+        if(_bullet != null)
+        {
+            _bullet.location = (playerTr.position + new Vector3(0, 0f, 0)) - tr.position;
+            _bullet.transform.position = tr.position;
+            _bullet.gameObject.SetActive(true);
+            _bullet.Fire(5.0f);
+        }
+    }
+
+    float rayTimeNext = 0;
+    float rayCoolTime = 0.1f;
+
+    public void OnGvrPointerHover(PointerEventData eventData)
+    {
+        if (Time.time >= rayTimeNext)
+        {
+            EventManager.CallEvent(new CollectObjectHitEvent(myScore));
+            Debug.Log("Corret");
+            rayCoolTime = Time.time + rayCoolTime;
+
+        }
     }
 }

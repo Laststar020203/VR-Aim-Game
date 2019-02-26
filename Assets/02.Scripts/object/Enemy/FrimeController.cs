@@ -19,6 +19,8 @@ public class FrimeController : Boss
     public int count;
     public float distance;
 
+    public static FrimeController head;
+
     protected override string SoilderName
     {
         get
@@ -29,10 +31,19 @@ public class FrimeController : Boss
 
     void Start()
     {
+        if(head != null)
+        {
+            Destroy(this.gameObject);
+        }
+
+        head = this;
+
         SpawnMySoilder();
         SetPattern();
-
+        CreatePooling(10);
         StartCoroutine(Play());
+
+        
     }
 
     void Update()
@@ -50,8 +61,10 @@ public class FrimeController : Boss
 
         for(int i = 1; i <= straightCount; i++)
         {
-            GameObject obj = Instantiate(frime, new Vector3(startSpawnPoint.x + i*distance , startSpawnPoint.y , startSpawnPoint.z), Quaternion.identity);
-            soilders.Add(obj.GetComponent<Frime>());
+            GameObject obj = Instantiate(frime, new Vector3(-27 , 0 , 90), Quaternion.identity);
+            Frime clone = obj.GetComponent<Frime>();
+            clone.firstPosition = new Vector3(startSpawnPoint.x + i * distance, startSpawnPoint.y, startSpawnPoint.z);
+            soilders.Add(clone);
             obj.name = MakeSoilderName(SoilderName, i);
            
         }
@@ -59,8 +72,10 @@ public class FrimeController : Boss
 
         for(int i = straightCount + 1 ; i <= count; i++)
         {
-            GameObject obj = Instantiate(frime, new Vector3(startSpawnPoint.x + (i - straightCount) * distance, startSpawnPoint.y - distance, startSpawnPoint.z), Quaternion.identity);
-            soilders.Add(obj.GetComponent<Frime>());
+            GameObject obj = Instantiate(frime, new Vector3(27 , 0, 90), Quaternion.identity);
+            Frime clone = obj.GetComponent<Frime>();
+            clone.firstPosition = new Vector3(startSpawnPoint.x + (i - straightCount) * distance, startSpawnPoint.y - distance, startSpawnPoint.z);
+            soilders.Add(clone);
             obj.name = MakeSoilderName(SoilderName, i);
         }
 

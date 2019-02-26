@@ -7,6 +7,7 @@ TagManager:
   - GROUND
   - TARGET
   - PLAYER
+  - BULLET
   layers:
   - Default
   - TransparentFX

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CubeAction : MonoBehaviour {
+public class CubeAction : MonoBehaviour , IGvrPointerHoverHandler {
 
 
     public float speed;
@@ -10,43 +9,70 @@ public class CubeAction : MonoBehaviour {
 
     public GameObject expParticle;
 
-    Transform tr;
 
+
+    /*
     Vector3 distance;
     Vector3 location;
 
     public int LimitX;
     public int LimitY;
     public int LimitZ;
+    */
 
-
+    float nextTime;
+    float coolTime = 0.1f;
+    
 
     public int score = 0;
 
+    //public Vector3 firstPosition;
+
     private void Awake()
     {
-        EventManager.AddListener<CollectObjectHitEvent>(HitbyPlayerAction);
+       
 
     }
     void Start()
     {
        
 
-        tr = GetComponent<Transform>();
-        SetIrregularRotate();
+       
+        //SetIrregularRotate();
+        //firstPosition = tr.position;
     }
 
+    public void OnGvrPointerHover(PointerEventData eventData)
+    {
+        if (Time.time >= nextTime)
+        {
+
+            GameObject obj = Instantiate(expParticle, eventData.pointerCurrentRaycast.worldPosition, Quaternion.identity);
+            Destroy(obj, 0.2f);
+
+
+            score++;
+            
+
+            nextTime = Time.time + coolTime;
+
+        }
+    }
+
+    
+
+    /*
     void Update()
     {
 
+       
         
-
-        if (!((tr.position.x >= -LimitX && tr.position.x <= LimitX) &&
-            (tr.position.z >= -LimitZ && tr.position.z <= LimitZ) &&
-                (tr.position.y <= LimitY && tr.position.y >= 2)))
+        if (!((tr.position.x >= -LimitX + firstPosition.x && tr.position.x <= LimitX + firstPosition.x) &&
+            (tr.position.z >= -LimitZ + firstPosition.z && tr.position.z <= LimitZ + firstPosition.z) &&
+                (tr.position.y <= LimitY + firstPosition.y && firstPosition.y >= 5)))
         {
 
-
+            //tr.position = Vector3.Slerp(tr.position, firstPosition, Time.deltaTime * speed);
             DistanceChange();
         }
 
@@ -56,6 +82,7 @@ public class CubeAction : MonoBehaviour {
         Rotate();
     }
 
+    
     
     private void SetIrregularDistance()
     {
@@ -106,19 +133,7 @@ public class CubeAction : MonoBehaviour {
        
     }
 
+    */
 
-    public void HitbyPlayerAction(CollectObjectHitEvent e)
-    {
-        
 
-        
-        GameObject obj = Instantiate(expParticle, e.HitPoint, Quaternion.identity);
-        Destroy(obj, 0.2f);
-
-      
-        score++;
-        SetIrregularDistance();
-    }
-
-    
 }

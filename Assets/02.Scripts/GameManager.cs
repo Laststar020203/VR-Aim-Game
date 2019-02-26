@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public int score = 0;
 
-
-
-
+    public Text scoreText;
 
     private void Awake()
     {
@@ -20,14 +20,14 @@ public class GameManager : MonoBehaviour
     {
         SetTree();
 
+        EventManager.AddListener<CollectObjectHitEvent>(AddScore);
         
-       
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        UpdateUI();
     }
 
     private void SetTree()
@@ -46,5 +46,17 @@ public class GameManager : MonoBehaviour
             tree.spawn = Tree.Spawn.Left;
             
         }
+    }
+
+    private void AddScore(CollectObjectHitEvent e)
+    {
+        Debug.Log(e.TargetScore);
+        score += e.TargetScore;
+
+    }
+
+    private void UpdateUI()
+    {
+        scoreText.text = "Score : " + score;
     }
 }

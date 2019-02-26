@@ -12,6 +12,8 @@ public abstract class Boss : MonoBehaviour
    //List로 순화하는 형식으로 안하고 Queue로 한 이유는 상황에 따라 패턴을 바꿔야 할 때
     public bool isDie = false;
 
+    public GameObject frimeBullet;
+
     protected abstract void SpawnMySoilder();
 
     protected abstract string SoilderName { get; }
@@ -40,5 +42,47 @@ public abstract class Boss : MonoBehaviour
             solider.Play(delay, duration, power);
         }
     }
+
+    protected List<List<BulletBase>> frimeBulletPool = new List<List<BulletBase>>();
+
+    protected void CreatePooling(int count)
+    {
+       foreach(Solider solider in soilders)
+       {
+
+            string name = solider.gameObject.name;
+            List<BulletBase> bullets = new List<BulletBase>();
+            BulletBase clone = frimeBullet.GetComponent<BulletBase>();
+
+            GameObject objectPools = new GameObject(name + "'s ObjectPools");
+
+            for (int i = 0; i < count; i++)
+            {
+                var obj = Instantiate<BulletBase>(clone, objectPools.transform);
+                obj.gameObject.name = name + "'s Bullet_" + i.ToString("00");
+                obj.gameObject.SetActive(false);
+                bullets.Add(obj);
+            }
+
+            frimeBulletPool.Add(bullets);
+       }
+    }
+
+    public BulletBase GetBullet(int index)
+    {
+        
+        List<BulletBase> bulletList = frimeBulletPool[index];
+        for (int i = 0; i < bulletList.Count; i++)
+        {
+            if(bulletList[i].gameObject.activeSelf == false)
+            {
+                return bulletList[i];
+            }
+        }
+
+        return null;
+    }
+
    
+
 }

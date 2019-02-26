@@ -9,22 +9,26 @@ public class CollectObjectHitEvent : Event
 {
     public static readonly List<GameEvent<CollectObjectHitEvent>> listeners = new List<GameEvent<CollectObjectHitEvent>>();
 
+
+
+    private int targetScore = 0;
     
 
-    private Vector3 hitPoint;
-    
-
-    public CollectObjectHitEvent(Vector3 hitPoint)
+    public CollectObjectHitEvent(int targetScore)
     {
-       
-        this.hitPoint = hitPoint;
+
+        this.targetScore = targetScore;
     }
 
-    public Vector3 HitPoint
+    public int TargetScore
     {
         get
         {
-            return hitPoint;
+            return targetScore;
+        }
+        set
+        {
+            targetScore = value;
         }
     }
 
