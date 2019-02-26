@@ -17,6 +17,9 @@ public class Frime : Solider
 
     Animator anim;
 
+    public GameObject bullet;
+
+    private Transform playerTr;
 
     private void Awake()
     {
@@ -24,6 +27,8 @@ public class Frime : Solider
         anim = GetComponent<Animator>();
         firstPosition = tr.position;
         isCompeleted = true;
+
+        playerTr = GameObject.FindGameObjectWithTag("PLAYER").GetComponent<Transform>();
     }
 
     private void Start()
@@ -34,8 +39,17 @@ public class Frime : Solider
 
     private void Update()
     {
+       //Animation
        anim.SetBool("IsIdle", isCompeleted);
-            
+       
+      //Look
+       tr.LookAt(playerTr);
+    
+       if(Time.time > nextTime)
+        {
+            BeamAttack();
+            nextTime = Time.time + coolTime;
+        }
 
 
     }
@@ -89,5 +103,13 @@ public class Frime : Solider
                 StartCoroutine(Triangle(delay, duration , power));
                 break;
         }
+    }
+
+    private void BeamAttack()
+    {
+        GameObject _bullet = Instantiate(bullet, tr.position, Quaternion.identity);
+        FrimeBullet fb = _bullet.GetComponent<FrimeBullet>();
+        fb.location =  playerTr.position - tr.position + new Vector3(0, 4 ,0 );
+        Destroy(_bullet, 3.0f);
     }
 }

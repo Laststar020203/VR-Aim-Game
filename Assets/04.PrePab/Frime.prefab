@@ -56,7 +56,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCompeleted: 0
+  coolTime: 0.2
   isDie: 0
+  bullet: {fileID: 2922037719346604380, guid: ad8f05fe7169316488ca9e7f4025f8b9, type: 3}
 --- !u!23 &2591012065649212508
 MeshRenderer:
   m_ObjectHideFlags: 0
