@@ -1,5 +1,5 @@
 ﻿
-public interface Enemy
+public interface Enemy : Entity
 {
-    
+    int WORTH { get; set; }
 }

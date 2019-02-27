@@ -8,10 +8,14 @@ public class GameManager : MonoBehaviour , IBulletController
     public int score = 0;
     public Text scoreText;
 
+    public Slider healthBar;
+
     public GameObject playerBullet;
     List<BulletBase> playerBulletPooling = new List<BulletBase>();
 
     public static GameManager instance;
+
+    public Player player;
 
     private void Awake()
     {
@@ -22,20 +26,18 @@ public class GameManager : MonoBehaviour , IBulletController
         instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        CreatePooling(10);
+        CreatePooling(20);
         SetTree();
 
-        EventManager.AddListener<CollectObjectHitEvent>(AddScore);
-        
+        EventManager.AddListener<EnemyDeathEvent>(AddScore);
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateUI();
+        healthBar.value = (float)player.HP / player.MAX_HEALTH;
     }
 
     private void SetTree()
@@ -56,20 +58,9 @@ public class GameManager : MonoBehaviour , IBulletController
         }
     }
 
-    private void AddScore(CollectObjectHitEvent e)
-    {
-        Debug.Log(e.TargetScore);
-        score += e.TargetScore;
-
-    }
-
     private void UpdateUI()
     {
         scoreText.text = "Score : " + score;
-    }
-
-    private void createPlayerBulletPolling()
-    {
 
     }
 
@@ -98,5 +89,10 @@ public class GameManager : MonoBehaviour , IBulletController
         }
 
         return null;
+    }
+
+    private void AddScore(EnemyDeathEvent e)
+    {
+        score += e.DeathEnemyWorth;
     }
 }

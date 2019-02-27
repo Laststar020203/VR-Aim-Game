@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
-using UnityEngine.EventSystems;
 
-public class Frime : Solider , IGvrPointerHoverHandler
+public class Frime : Solider
 {
 
     [HideInInspector]
@@ -13,9 +11,6 @@ public class Frime : Solider , IGvrPointerHoverHandler
 
     Transform tr;
     public Vector3 firstPosition;
-
-    public float hp;
-    
 
     Animator anim;
 
@@ -26,11 +21,21 @@ public class Frime : Solider , IGvrPointerHoverHandler
             return Convert.ToInt32(this.gameObject.name.Substring(this.gameObject.name.IndexOf("_") + 1));
         }
     }
+
+    public override string NAME { get { return name; } set { name = value; } }
+
+    public override int HP { get { return hp; } set { hp = value; } }
+    public override int WORTH { get { return worth; } set { worth = value; } }
+    public override float FIRE_COOL_TIME { get { return fireCoolTime; } set { fireCoolTime = value; } }
+
     public GameObject bullet;
 
     private Transform playerTr;
 
+    Sequence triangle;
+
     private bool firstMoving = true;
+
 
     private void Awake()
     {
@@ -40,9 +45,6 @@ public class Frime : Solider , IGvrPointerHoverHandler
 
         playerTr = GameObject.FindGameObjectWithTag("PLAYER").GetComponent<Transform>();
 
-        coolTime = 0.1f;
-
-        myScore = 20;
     }
 
     private void Start()
@@ -51,7 +53,7 @@ public class Frime : Solider , IGvrPointerHoverHandler
         isCompeleted = false;
         StartCoroutine(Idle(0.1f, 0.5f));
         //count = Convert.ToInt32(this.gameObject.name.Substring(this.gameObject.name.IndexOf("_") + 1));
-
+        name = this.gameObject.name;
     }
 
     private void Update()
@@ -62,10 +64,10 @@ public class Frime : Solider , IGvrPointerHoverHandler
       //Look
        tr.LookAt(playerTr);
     
-       if(Time.time > nextTime)
+       if(Time.time > fireTimeNextTime)
        {
             BeamAttack();
-            nextTime = Time.time + coolTime;
+            fireTimeNextTime = Time.time + FIRE_COOL_TIME;
        }
 
 
@@ -88,7 +90,7 @@ public class Frime : Solider , IGvrPointerHoverHandler
         yield return new WaitForSeconds(delay * count);
 
 
-        Sequence triangle = DOTween.Sequence();
+        triangle = DOTween.Sequence();
         triangle.Append(tr.DOMove(new Vector3(tr.position.x + power, tr.position.y + power, tr.position.z), duration));
         triangle.Append(tr.DOMove(new Vector3(tr.position.x - power * 2, tr.position.y, tr.position.z), duration));
         triangle.Append(tr.DOMove(firstPosition, duration));
@@ -105,6 +107,7 @@ public class Frime : Solider , IGvrPointerHoverHandler
             isCompeleted = true;
         }));
         //triangle.Play();
+
     }
 
     public override void Play(float delay, float duration , float power)
@@ -149,7 +152,8 @@ public class Frime : Solider , IGvrPointerHoverHandler
     
     public override void Death()
     {
-        Debug.Log(this.gameObject.name + " heart!");
+        EventManager.CallEvent(new EnemyDeathEvent(this));
+        Destroy(this.gameObject);
     }
 
     
@@ -161,9 +165,20 @@ public class Frime : Solider , IGvrPointerHoverHandler
         }
     }
 
-    public override void Damage(Vector3 hitPoint)
+    protected override void Damage(Vector3 hitPoint)
     {
-        
+        Destroy(Instantiate(damageParticle, hitPoint, Quaternion.identity), 5.0f);
+        HP -= 10;
+        if(HP <= 0)
+        {
+            Death();
+        }
     }
+
+    private void OnDisable()
+    {
+        triangle.Kill();
+    }
+
 }
 //ontrigger는 충돌의 위치를 찾을 수 없음

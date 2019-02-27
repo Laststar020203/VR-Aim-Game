@@ -51,8 +51,10 @@ public abstract class Boss : MonoBehaviour , IBulletController
             string name = solider.gameObject.name;
             List<BulletBase> bullets = new List<BulletBase>();
             BulletBase clone = frimeBullet.GetComponent<BulletBase>();
-
+            
             GameObject objectPools = new GameObject(name + "'s ObjectPools");
+
+            objPool.Add(objectPools);
 
             for (int i = 0; i < count; i++)
             {
@@ -60,6 +62,8 @@ public abstract class Boss : MonoBehaviour , IBulletController
                 obj.gameObject.name = name + "'s Bullet_" + i.ToString("00");
                 obj.gameObject.SetActive(false);
                 bullets.Add(obj);
+
+
             }
 
             frimeBulletPool.Add(bullets);
@@ -69,9 +73,12 @@ public abstract class Boss : MonoBehaviour , IBulletController
     
     public BulletBase GetBullet(int index)
     {
+
         List<BulletBase> bulletList = frimeBulletPool[index];
         for (int i = 0; i < bulletList.Count; i++)
         {
+            
+           
             if (bulletList[i].gameObject.activeSelf == false)
             {
                 return bulletList[i];
@@ -83,7 +90,9 @@ public abstract class Boss : MonoBehaviour , IBulletController
     
 
     protected List<List<BulletBase>> frimeBulletPool = new List<List<BulletBase>>();
-    
 
+    protected List<GameObject> objPool = new List<GameObject>();
+
+    protected abstract void EnemyDeath(EnemyDeathEvent e);
    
 }

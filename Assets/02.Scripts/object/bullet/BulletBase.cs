@@ -20,5 +20,9 @@ public abstract class BulletBase : MonoBehaviour
    }
 
     public abstract void Fire(float destoryTime);
-   
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        this.gameObject.SetActive(false);
+    }
 }

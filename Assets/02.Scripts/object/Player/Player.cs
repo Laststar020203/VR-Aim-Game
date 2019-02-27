@@ -3,24 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour , Entity
 {
 
     Transform tr;
     public Image bloodScreen;
 
 
-    public float fireCoolTime;
-    public float nextTime;
 
-    
+  
     Transform cameraTr;
+    
+    [SerializeField]
+    private int hp;
+    private string name;
+    [SerializeField]
+    private float fireCoolTime;
+    private float nextTime;
+
+    [HideInInspector]
+    public int MAX_HEALTH;
+    public int HP { get { return hp;} set { hp = value; } }
+    public string NAME { get { return "PLAYER"; } set { name = value; } }
+    public float FIRE_COOL_TIME { get { return fireCoolTime; } set { fireCoolTime = value; } }
 
     private void Start()
     {
         tr = GetComponent<Transform>();
         bloodScreen.color = Color.clear;
         cameraTr = Camera.main.transform;
+
+        MAX_HEALTH = HP;
     }
     
     void Update()
@@ -61,7 +74,13 @@ public class Player : MonoBehaviour
 
     private void Damage()
     {
+        hp -= 10;
         StartCoroutine(ShowBloodScreen());
+
+        if (hp <= 10)
+        {
+            Death();
+        }
     }
 
     private IEnumerator ShowBloodScreen()
@@ -81,4 +100,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Death()
+    {
+       
+    }
 }
