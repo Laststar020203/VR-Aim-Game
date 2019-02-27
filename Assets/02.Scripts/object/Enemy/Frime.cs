@@ -41,6 +41,7 @@ public class Frime : Solider , IGvrPointerHoverHandler
         playerTr = GameObject.FindGameObjectWithTag("PLAYER").GetComponent<Transform>();
 
         coolTime = 0.1f;
+
         myScore = 20;
     }
 
@@ -144,14 +145,25 @@ public class Frime : Solider , IGvrPointerHoverHandler
     float rayTimeNext = 0;
     float rayCoolTime = 0.1f;
 
-    public void OnGvrPointerHover(PointerEventData eventData)
+   
+    
+    public override void Death()
     {
-        if (Time.time >= rayTimeNext)
-        {
-            EventManager.CallEvent(new CollectObjectHitEvent(myScore));
-            Debug.Log("Corret");
-            rayCoolTime = Time.time + rayCoolTime;
+        Debug.Log(this.gameObject.name + " heart!");
+    }
 
+    
+    private void OnCollisionEnter(Collision coll)
+    {
+        if (coll.collider.CompareTag("PLAYER_BULLET"))
+        {
+            Damage(coll.contacts[0].point);
         }
     }
+
+    public override void Damage(Vector3 hitPoint)
+    {
+        
+    }
 }
+//ontrigger는 충돌의 위치를 찾을 수 없음

@@ -14,7 +14,7 @@ public class CollectObjectHitEvent : Event
     private int targetScore = 0;
     
 
-    public CollectObjectHitEvent(int targetScore)
+    public CollectObjectHitEvent(Vector3 hitPoint)
     {
 
         this.targetScore = targetScore;

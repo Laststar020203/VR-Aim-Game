@@ -14,7 +14,7 @@ public class PlayerFire : MonoBehaviour
 
     public void Fire()
     {
-
+        
     }
 
 

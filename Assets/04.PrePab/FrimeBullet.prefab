@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2396928773831944076}
   - component: {fileID: 1310973977}
   m_Layer: 2
-  m_Name: Bullet
+  m_Name: FrimeBullet
   m_TagString: BULLET
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eae1a8fb51eea54b9c12cdd6b530f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 20000
 --- !u!54 &2396928773831944076
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -55,9 +55,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2922037719346604380}
   serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 2
+  m_Drag: 2
+  m_AngularDrag: 2
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0

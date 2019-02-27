@@ -8,6 +8,7 @@ TagManager:
   - TARGET
   - PLAYER
   - BULLET
+  - PLAYER_BULLET
   layers:
   - Default
   - TransparentFX

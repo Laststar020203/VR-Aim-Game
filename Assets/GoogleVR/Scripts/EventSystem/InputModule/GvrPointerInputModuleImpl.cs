@@ -259,6 +259,7 @@ public class GvrPointerInputModuleImpl
               && !(raycastResult.module is GvrPointerGraphicRaycaster)
               && !(raycastResult.module is GvrPointerPhysicsRaycaster))
         {
+            return;
             Debug.LogWarning("Using Raycaster (Raycaster: " + raycastResult.module.GetType() +
             ", Object: " + raycastResult.module.name + "). It is recommended to use " +
             "GvrPointerPhysicsRaycaster or GvrPointerGrahpicRaycaster with GvrPointerInputModule.");

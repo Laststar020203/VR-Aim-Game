@@ -12,7 +12,10 @@ public abstract class Solider : MonoBehaviour
     protected float nextTime;
 
     protected int myScore;
-   
-    
+
+    public GameObject damageParticle;
+
+    public abstract void Death();
+    public abstract void Damage(Vector3 hitPoint);
 
 }

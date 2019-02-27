@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Boss : MonoBehaviour
+public abstract class Boss : MonoBehaviour , IBulletController
 {
     public List<Solider> soilders = new List<Solider>();
 
@@ -43,12 +43,10 @@ public abstract class Boss : MonoBehaviour
         }
     }
 
-    protected List<List<BulletBase>> frimeBulletPool = new List<List<BulletBase>>();
-
-    protected void CreatePooling(int count)
+    public void CreatePooling(int count)
     {
-       foreach(Solider solider in soilders)
-       {
+        foreach (Solider solider in soilders)
+        {
 
             string name = solider.gameObject.name;
             List<BulletBase> bullets = new List<BulletBase>();
@@ -65,16 +63,16 @@ public abstract class Boss : MonoBehaviour
             }
 
             frimeBulletPool.Add(bullets);
-       }
+        }
     }
 
+    
     public BulletBase GetBullet(int index)
     {
-        
         List<BulletBase> bulletList = frimeBulletPool[index];
         for (int i = 0; i < bulletList.Count; i++)
         {
-            if(bulletList[i].gameObject.activeSelf == false)
+            if (bulletList[i].gameObject.activeSelf == false)
             {
                 return bulletList[i];
             }
@@ -82,7 +80,10 @@ public abstract class Boss : MonoBehaviour
 
         return null;
     }
+    
+
+    protected List<List<BulletBase>> frimeBulletPool = new List<List<BulletBase>>();
+    
 
    
-
 }

@@ -1,15 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerDamage : MonoBehaviour
 {
-    Player main;
 
-    public PlayerDamage(Player main)
-    {
-        this.main = main;
-    }
+    public Image bloodScreen;
 
     public void Damage()
     {
@@ -18,8 +15,18 @@ public class PlayerDamage : MonoBehaviour
 
     private IEnumerator ShowBloodScreen()
     {
-        main.bloodScreen.color = new Color(1, 0, 0, Random.Range(0.2f , 0.3f));
+        
+        bloodScreen.color = new Color(1, 0, 0, Random.Range(0.2f , 0.3f));
         yield return new WaitForSeconds(0.1f);
-        main.bloodScreen.color = Color.clear;
+        bloodScreen.color = Color.clear;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("BULLET"))
+        {
+
+            Damage();
+        }
     }
 }
