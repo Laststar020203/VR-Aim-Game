@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour , IBulletController
 
     public Player player;
 
+   
+    public bool isbossAlive = false;
+
+    public Boss[] bosses;
+
     private void Awake()
     {
        if(instance != null)
@@ -32,16 +37,30 @@ public class GameManager : MonoBehaviour , IBulletController
         SetTree();
 
         EventManager.AddListener<EnemyDeathEvent>(AddScore);
+
+      
     }
 
     void Update()
     {
+    
         UpdateUI();
-        healthBar.value = (float)player.HP / player.MAX_HEALTH;
+
+        if(!isbossAlive)
+        CreateBoss(0);
+
+    }
+
+    void CreateBoss(int index)
+    {
+        Instantiate<Boss>(bosses[index], Vector3.zero, Quaternion.identity);
+        isbossAlive = true;
     }
 
     private void SetTree()
     {
+        
+
         GameObject right = GameObject.Find("RightTrees");
         GameObject left = GameObject.Find("LeftTrees");
 
@@ -61,6 +80,7 @@ public class GameManager : MonoBehaviour , IBulletController
     private void UpdateUI()
     {
         scoreText.text = "Score : " + score;
+        healthBar.value = (float)player.HP / player.MAX_HEALTH;
 
     }
 

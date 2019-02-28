@@ -21,6 +21,8 @@ public class FrimeController : Boss
 
     public static FrimeController head;
 
+    private bool isDie = false;
+
 
     protected override string SoilderName
     {
@@ -53,7 +55,7 @@ public class FrimeController : Boss
 
     void Update()
     {
-        
+        if (isDie) GameManager.instance.isbossAlive = false;
     }
 
 

@@ -102,6 +102,6 @@ public class Player : MonoBehaviour , Entity
 
     public void Death()
     {
-       
+        LoadSceneManager.IndexLoadScene(0);
     }
 }
